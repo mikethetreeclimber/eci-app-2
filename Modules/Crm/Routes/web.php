@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Crm\Http\Controllers\CrmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('crm')->group(function() {
-    Route::resource('/{id}', CrmController::class);
+Route::middleware('auth')->group(function() {
+    Route::get('/crm', [CrmController::class, 'index']);
 });

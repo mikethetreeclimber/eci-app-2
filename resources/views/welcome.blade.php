@@ -45,7 +45,7 @@
                             </a>
                         </li>
                         <li class="inline px-4">
-                            <a href="/crm/{{ auth()->id() }}" class="link-primary text-bold text-xl">
+                            <a href="/crm?user={{ auth()->id() }}" class="link-primary text-bold text-xl">
                                 CRM
                             </a>
                         </li>

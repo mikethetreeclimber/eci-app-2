@@ -2,32 +2,19 @@
 
 namespace Modules\Crm\Http\Controllers;
 
-use App\Models\User;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Session;
 
-class CrmController extends Controller
+class CircutController extends Controller
 {
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
-        $userId = $request->query('user');
-
-        if ($userId == Auth::id()) {
-            return view('crm::index');
-        } else {
-            session()->put('error', 'You Must Sign in');
-            // dd(Session::all());
-            return redirect('login');
-        }
-        
-      
+        return view('crm::index');
     }
 
     /**
@@ -54,7 +41,7 @@ class CrmController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show(User $id)
+    public function show($id)
     {
         return view('crm::show');
     }
