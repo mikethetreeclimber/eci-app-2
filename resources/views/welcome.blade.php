@@ -38,6 +38,8 @@
                             {{ config('app.name') }}
                         </p>
                     </a>
+            @if (Auth::user())
+
                     <ul class="list-reset">
                         <li class="inline px-4">
                             <a href="#" class="link-primary text-bold text-xl">
@@ -45,7 +47,7 @@
                             </a>
                         </li>
                         <li class="inline px-4">
-                            <a href="/crm?user={{ auth()->id() }}" class="link-primary text-bold text-xl">
+                            <a href="/crm" class="link-primary text-bold text-xl">
                                 CRM
                             </a>
                         </li>
@@ -60,6 +62,7 @@
                             </a>
                         </li>
                     </ul>
+                    @endif
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@
                 <li>
                     <a>Home</a>
                 </li>
-                <li>Add Circut</li>
+                <li>Add circuit</li>
             </ul>
         </div>
 

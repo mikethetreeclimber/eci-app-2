@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Modules\Crm\Http\Controllers\CrmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,5 @@ use Modules\Crm\Http\Controllers\CrmController;
 |
 */
 
-Route::middleware('auth')->group(function() {
-    Route::get('/crm', [CrmController::class, 'index']);
-});
+    Route::resource('/crm', CrmController::class)
+    ->parameter('crm', 'user:name');

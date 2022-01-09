@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCircutsTable extends Migration
+class CreateCircuitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +14,10 @@ class CreateCircutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('circuts', function (Blueprint $table) {
+        Schema::create('circuits', function (Blueprint $table) {
             $table->id();
-
+            $table->string('circuit_name');
+            $table->foreignIdFor(User::class, 'user_id');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateCircutsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('circuts');
+        Schema::dropIfExists('circuits');
     }
 }

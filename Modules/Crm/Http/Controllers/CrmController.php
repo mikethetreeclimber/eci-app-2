@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Session;
 
 class CrmController extends Controller
 {
@@ -15,19 +14,17 @@ class CrmController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
-        $userId = $request->query('user');
+        
+        $userId = auth()->id();
 
-        if ($userId == Auth::id()) {
+        if ($userId !== null && $userId == Auth::id()) {
             return view('crm::index');
         } else {
             session()->put('error', 'You Must Sign in');
-            // dd(Session::all());
-            return redirect('login');
+            return redirect()->route('login');
         }
-        
-      
     }
 
     /**
@@ -54,8 +51,12 @@ class CrmController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show(User $id)
+    public function show(User $user, Request $request)
     {
+
+
+        dd($request->route()->parameter('user'));
+
         return view('crm::show');
     }
 
