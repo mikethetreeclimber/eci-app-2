@@ -11,6 +11,12 @@ class Circuit extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = ['station'];
+
+    public function station()
+    {
+        return $this->hasMany(Station::class);
+    }
 
     public function user()
     {

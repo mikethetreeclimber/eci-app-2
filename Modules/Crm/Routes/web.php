@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Modules\Crm\Http\Controllers\CircuitController;
 use Modules\Crm\Http\Controllers\CrmController;
 
 /*
@@ -14,5 +15,12 @@ use Modules\Crm\Http\Controllers\CrmController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+    Route::prefix('/crm')->as('crm.')->group(function () {
+        Route::get('', [CrmController::class, 'index']);
+        Route::prefix('/circuit')->as('circuit.')->group(function () {
+            Route::get('/', [CircuitController::class, 'index']);
+            Route::get('/{circuit:circuit_name}', [CircuitController::class, 'show'])
+                ->name('show');
+        });
 
-    Route::get('/crm', [CrmController::class, 'index']);
+    });

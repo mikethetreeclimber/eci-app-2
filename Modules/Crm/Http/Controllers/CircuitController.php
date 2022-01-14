@@ -2,9 +2,11 @@
 
 namespace Modules\Crm\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Modules\Crm\Entities\Circuit;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\Crm\Entities\Station;
 
 class CircuitController extends Controller
 {
@@ -14,7 +16,7 @@ class CircuitController extends Controller
      */
     public function index()
     {
-        return view('crm::index');
+        return view('crm::circuit.index');
     }
 
     /**
@@ -41,9 +43,10 @@ class CircuitController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function show(Circuit $circuit)
     {
-        return view('crm::show');
+        $stations = Station::get();
+        return view('crm::circuit.show', ['circuit' => $circuit, 'stations' => $stations]);
     }
 
     /**

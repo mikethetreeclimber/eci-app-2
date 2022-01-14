@@ -24,12 +24,12 @@
                     @foreach ($circuits as $circuit)
                         <tr class="">
                             <td> {{ $circuit['id'] }}</td>
-                            <td>{{ $circuit['circuit_name'] }}</td>
+                            <td>{{ str_replace('-', ' ', $circuit['circuit_name']) }}</td>
                             <td>{{ Carbon\Carbon::parse($circuit['created_at'])->diffForHumans() }}</td>
                             <td class="space-x-4">
-                                <button class="btn btn-primary">
+                                <a href="{{ route('crm.circuit.show', ['circuit' => $circuit['circuit_name']]) }}" class="btn btn-primary">
                                     View
-                                </button>
+                                </a>
                                 <button wire:click="removeCircuit('{{ $circuit['id'] }}')"
                                     class="btn bg-red-400 hover:bg-red-700">
                                     Remove

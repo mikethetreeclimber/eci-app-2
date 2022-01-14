@@ -43,6 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'circuit'
+    ];
+
     public function circuit()
     {
         return $this->hasMany(Circuit::class);

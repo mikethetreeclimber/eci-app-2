@@ -12,7 +12,7 @@ class AddCircuitForm extends Component
     public function addCircuit()
     {
         Circuit::create([
-            'circuit_name' => $this->circuitName,
+            'circuit_name' => str_replace(' ', '-', ucwords($this->circuitName)),
             'user_id' => auth()->id(),
         ]);
 

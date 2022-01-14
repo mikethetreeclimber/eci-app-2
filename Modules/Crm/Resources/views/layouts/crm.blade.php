@@ -47,7 +47,9 @@
                 <li>
                     <a>Home</a>
                 </li>
-                <li>Add circuit</li>
+                @foreach ($breadcrumbs as $breadcrumb)
+                    <li>{{ $breadcrumb }}</li>
+                @endforeach
             </ul>
         </div>
 
