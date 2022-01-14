@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Modules\Crm\Http\Controllers\CrmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::resource('/crm', CrmController::class)
-    ->parameter('crm', 'user:name');
+    Route::get('/crm', [CrmController::class, 'index']);

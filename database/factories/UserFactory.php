@@ -14,13 +14,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'name' => 'Mike the Tree Climber',
-            'email' => 'mikethetreeclimber@gmail.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('tree0420'),
-            'remember_token' => Str::random(10),
-        ];
+       
     }
 
     /**

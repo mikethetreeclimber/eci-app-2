@@ -22,13 +22,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('tree0420'),
                 'remember_token' => Str::random(10),
             ],
-            [
-                'name' => 'admin',
-                'email' => 'admin@admin.com',
-                'email_verified_at' => now(),
-                'password' => bcrypt('tree0420'),
-                'remember_token' => Str::random(10),
-            ],
         );
 
         \App\Models\User::create(
