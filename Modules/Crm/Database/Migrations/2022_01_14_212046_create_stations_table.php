@@ -17,15 +17,13 @@ class CreateStationsTable extends Migration
         Schema::create('stations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Circuit::class);
-            $table->integer('station_number');
-            $table->text('units');
-            $table->text('address');
-            $table->text('contact_name');
-            $table->text('contact_number');
-            $table->text('alt_contact_number');
-            $table->text('attempt_one');
-            $table->text('attempt_two');
-            $table->text('attempt_three');
+            $table->string('station_number');
+            $table->string('unit');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('address');
+            $table->string('city');
+            $table->string('state');
             $table->timestamps();
         });
     }

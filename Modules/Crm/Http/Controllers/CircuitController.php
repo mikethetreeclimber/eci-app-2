@@ -2,11 +2,14 @@
 
 namespace Modules\Crm\Http\Controllers;
 
+use App\Csv;
 use Illuminate\Http\Request;
 use Modules\Crm\Entities\Circuit;
-use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Support\Renderable;
 use Modules\Crm\Entities\Station;
+use App\Imports\MailingListImport;
+use Illuminate\Routing\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Contracts\Support\Renderable;
 
 class CircuitController extends Controller
 {
@@ -45,8 +48,8 @@ class CircuitController extends Controller
      */
     public function show(Circuit $circuit)
     {
-        $stations = Station::get();
-        return view('crm::circuit.show', ['circuit' => $circuit, 'stations' => $stations]);
+        // $stations = $circuit->station;
+        return view('crm::circuit.show', ['circuit' => $circuit]);
     }
 
     /**

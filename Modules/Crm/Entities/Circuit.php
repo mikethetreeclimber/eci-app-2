@@ -11,7 +11,8 @@ class Circuit extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $with = ['station'];
+
+    // protected $with = ['station'];
 
     public function station()
     {

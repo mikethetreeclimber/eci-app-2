@@ -15,12 +15,14 @@ use Modules\Crm\Http\Controllers\CrmController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-    Route::prefix('/crm')->as('crm.')->group(function () {
-        Route::get('', [CrmController::class, 'index']);
-        Route::prefix('/circuit')->as('circuit.')->group(function () {
-            Route::get('/', [CircuitController::class, 'index']);
-            Route::get('/{circuit:circuit_name}', [CircuitController::class, 'show'])
-                ->name('show');
-        });
-
+    Route::middleware('auth')
+        ->prefix('/crm')->as('crm.')
+            ->group(function () {
+                Route::get('', [CrmController::class, 'index']);
+                Route::prefix('/circuit')->as('circuit.')->group(function () {
+                    Route::post('/import', [CircuitController::class, 'import'])->name('import');
+                    Route::get('/', [CircuitController::class, 'index']);
+                    Route::get('/{circuit:circuit_name}', [CircuitController::class, 'show'])
+                        ->name('show');
+                });
     });
