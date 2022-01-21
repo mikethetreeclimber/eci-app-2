@@ -15,5 +15,10 @@ class Station extends Model
     {
         return $this->belongsTo(Circuit::class);
     }
+
+    public function getStationNumberAttribute($value)
+    {
+        return (int)$value;
+    }
   
 }

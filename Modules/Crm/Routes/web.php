@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Modules\Crm\Http\Controllers\CircuitController;
 use Modules\Crm\Http\Controllers\CrmController;
+use Modules\Crm\Http\Controllers\StationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +20,10 @@ use Modules\Crm\Http\Controllers\CrmController;
         ->prefix('/crm')->as('crm.')
             ->group(function () {
                 Route::get('', [CrmController::class, 'index']);
-                Route::prefix('/circuit')->as('circuit.')->group(function () {
-                    Route::post('/import', [CircuitController::class, 'import'])->name('import');
-                    Route::get('/', [CircuitController::class, 'index']);
-                    Route::get('/{circuit:circuit_name}', [CircuitController::class, 'show'])
-                        ->name('show');
+                Route::prefix('/circuit/{circuit:circuit_name}')->as('circuit.')->group(function () {
+                    Route::get('/', [CircuitController::class, 'show'])->name('show');
+
+                    Route::get('/station/{station:station_number}', [StationsController::class, 'show'])
+                        ->name('station.show');
                 });
     });

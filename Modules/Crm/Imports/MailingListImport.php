@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace Modules\Crm\Imports;
 
 use Modules\Crm\Entities\Station;
 use Maatwebsite\Excel\Concerns\ToModel;

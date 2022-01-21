@@ -14,7 +14,7 @@ class Circuit extends Model
 
     // protected $with = ['station'];
 
-    public function station()
+    public function stations()
     {
         return $this->hasMany(Station::class);
     }

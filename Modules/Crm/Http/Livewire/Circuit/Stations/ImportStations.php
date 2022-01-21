@@ -2,13 +2,12 @@
 
 namespace Modules\Crm\Http\Livewire\Circuit\Stations;
 
-use App\Csv;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Modules\Crm\Entities\Station;
-use App\Imports\MailingListImport;
 use Maatwebsite\Excel\Facades\Excel;
 use \Illuminate\Support\Facades\Validator;
+use Modules\Crm\Imports\MailingListImport;
 
 class ImportStations extends Component
 {
@@ -21,8 +20,19 @@ class ImportStations extends Component
 
     public function mount()
     {
-        $this->uniqueStationNumbers = collect(Station::select('station_number')
-            ->where('circuit_id', '=', $this->circuit->id)->get())->unique('station_number')->toBase();
+        $this->getStationNumbers();
+    }
+
+    public function getStationNumbers()
+    {
+        $this->uniqueStationNumbers = collect(
+            Station::select('station_number')
+                ->where('circuit_id', '=', $this->circuit->id)
+                ->get()
+                ->toBase()
+            )->unique()
+                ->sortBy('station_number')
+                ->values()->toBase();
     }
 
     public function updatingFile($value)
@@ -36,11 +46,14 @@ class ImportStations extends Component
     public function import()
     {
         Excel::import(new MailingListImport($this->circuit), $this->file->getRealPath());
+        $this->getStationNumbers();
         
     }
 
     public function render()
     {
+
+        // dd($this->uniqueStationNumbers);
         return view('crm::livewire.circuit.stations.import-stations');
     }
 }

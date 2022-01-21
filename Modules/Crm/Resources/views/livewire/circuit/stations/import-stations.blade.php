@@ -1,12 +1,12 @@
 <div>
     <div class="card lg:card-side card-bordered">
         <div class="card-body">
-            <div class="grid grid-cols-12">
+            <div class="grid grid-cols-12 gap-4">
                 @forelse ($uniqueStationNumbers as $uniqueStationNumber)
 
-                    <div class="col-span-1">
-                        <div><button class="btn btn-outline btn-lg btn-active">{{ $uniqueStationNumber['station_number'] }}</button>
-                        </div>
+                    <div class="col-span-1 ">
+                        <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStationNumber]) }}"
+                            class="btn btn-outline btn-md btn-active">{{ $uniqueStationNumber['station_number'] }}</a>
                     </div>
 
                 @empty
