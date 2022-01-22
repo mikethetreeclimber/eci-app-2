@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/mikethetreeclimber/eci-app/main/habitat.svg" width="200"></a></p>
+<p align="left"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/mikethetreeclimber/eci-app/main/habitat.svg" width="200"></a></p>
 
 ## About ECI-APP
 
