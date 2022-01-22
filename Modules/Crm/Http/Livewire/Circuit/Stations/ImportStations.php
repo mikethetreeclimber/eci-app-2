@@ -43,6 +43,11 @@ class ImportStations extends Component
         )->validate();
     }
 
+    public function updatedFile()
+    {
+        $this->import();
+    }
+
     public function import()
     {
         Excel::import(new MailingListImport($this->circuit), $this->file->getRealPath());

@@ -2,13 +2,9 @@
 
 namespace Modules\Crm\Http\Controllers;
 
-use App\Csv;
 use Illuminate\Http\Request;
 use Modules\Crm\Entities\Circuit;
-use Modules\Crm\Entities\Station;
-use App\Imports\MailingListImport;
 use Illuminate\Routing\Controller;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Contracts\Support\Renderable;
 
 class CircuitController extends Controller
@@ -23,25 +19,6 @@ class CircuitController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('crm::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Show the specified resource.
      * @param int $id
      * @return Renderable
@@ -50,27 +27,6 @@ class CircuitController extends Controller
     {
         // $stations = $circuit->station;
         return view('crm::circuit.show', ['circuit' => $circuit]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('crm::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

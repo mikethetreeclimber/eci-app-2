@@ -11,74 +11,25 @@ use Illuminate\Contracts\Support\Renderable;
 class StationsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
-    {
-        return view('crm::index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('crm::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Show the specified resource.
      * @param int $id
      * @return Renderable
      */
     public function show(Circuit $circuit, Station $station)
     {
-        // display all the associated names and addresses for the station number 
-        // 
-        $allStationsAssociatedToLastName = Station::where('last_name', '=', $station->last_name)->orderBy('station_number')->get(['station_number', 'unit']);
-        return view('crm::circuit.stations.show', ['circuit' => $circuit, 'station' => $station, 'allStationsAssociatedToLastName' => $allStationsAssociatedToLastName]);
-    }
+        $allNamesAssociatedToStationNumber = collect(Station::where('station_number', '=', $station->station_number)
+            ->get(['first_name', 'last_name', 'address', 'city']))
+            ->unique()->values()->all();
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('crm::edit');
-    }
+        $allStationsAssociatedToLastName = Station::where('last_name', '=', $station->last_name)
+            ->orderBy('station_number')
+            ->get(['station_number', 'unit']);
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+        return view('crm::circuit.stations.show', [
+            'circuit' => $circuit,
+            'station' => $station,
+            'allStationsAssociatedToLastName' => $allStationsAssociatedToLastName,
+            'allNamesAssociatedToStationNumber' => $allNamesAssociatedToStationNumber
+        ]);
     }
 }

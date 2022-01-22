@@ -22,7 +22,7 @@
                     <span>Upload a file</span>
                     <input id="file-upload" wire:model="file" name="file-upload" type="file" class="sr-only" />
                 </label>
-                <button wire:click="import" class="btn btn-primary">Get Started</button>
+                
                 <button class="btn btn-ghost">More info</button>
             </div>
         </div>

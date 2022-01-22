@@ -48,7 +48,7 @@
                     <a>Home</a>
                 </li>
                 @foreach ($breadcrumbs as $breadcrumb)
-                    <li>{{ $breadcrumb }}</li>
+                    <li><a href="{{ route('crm.circuit.show', ['circuit' => $breadcrumb]) }}">{{ $breadcrumb }}</a></li>
                 @endforeach
             </ul>
         </div>
