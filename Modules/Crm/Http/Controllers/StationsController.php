@@ -45,7 +45,10 @@ class StationsController extends Controller
      */
     public function show(Circuit $circuit, Station $station)
     {
-        return view('crm::circuit.stations.show', ['circuit' => $circuit, 'station' => $station]);
+        // display all the associated names and addresses for the station number 
+        // 
+        $allStationsAssociatedToLastName = Station::where('last_name', '=', $station->last_name)->orderBy('station_number')->get(['station_number', 'unit']);
+        return view('crm::circuit.stations.show', ['circuit' => $circuit, 'station' => $station, 'allStationsAssociatedToLastName' => $allStationsAssociatedToLastName]);
     }
 
     /**

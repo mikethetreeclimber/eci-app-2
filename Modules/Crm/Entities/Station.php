@@ -20,5 +20,10 @@ class Station extends Model
     {
         return (int)$value;
     }
+
+    public function getNameAttribute($value)
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
   
 }
