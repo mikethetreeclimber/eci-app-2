@@ -40,6 +40,8 @@
                     </svg>
                 </button>
             </div>
+            <x-crm::notification />
+
         </div>
 
         <div class=" ml-10 text-lg breadcrumbs">

@@ -1,12 +1,13 @@
 <div>
+    
     <div class="card lg:card-side card-bordered">
         <div class="card-body">
-            <div class="grid grid-cols-12 gap-4">
-                @forelse ($uniqueStationNumbers as $uniqueStationNumber)
+            <div class="grid grid-cols-6 gap-4">
+                @forelse ($uniqueStations as $uniqueStation)
 
                     <div class="col-span-1 ">
-                        <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStationNumber]) }}"
-                            class="btn btn-outline btn-md btn-active">{{ $uniqueStationNumber['station_number'] }}</a>
+                        <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStation->station_number]) }}"
+                            class="w-full h-full btn btn-outline btn-active">{{ $uniqueStation->name }}</a>
                     </div>
 
                 @empty
@@ -18,9 +19,13 @@
             </div>
 
             <div class="card-actions">
-                <label for="file-upload" class="btn btn-accent">
-                    <span>Upload a file</span>
-                    <input id="file-upload" wire:model="file" name="file-upload" type="file" class="sr-only" />
+                <label for="mailing-list" class="btn btn-primary">
+                    <span class="text-base-300">Upload Mailing List</span>
+                    <input id="mailing-list" wire:model="mailing" name="mailing-list" type="file" class="sr-only" />
+                </label>
+                <label for="contact-list" class="btn btn-primary">
+                    <span class="text-base-300">Upload Contact List</span>
+                    <input id="contact-list" wire:model="contacts" name="contact-list" type="file" class="sr-only" />
                 </label>
                 
                 <button class="btn btn-ghost">More info</button>

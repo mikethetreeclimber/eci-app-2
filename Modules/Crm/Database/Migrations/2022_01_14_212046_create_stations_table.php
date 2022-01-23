@@ -26,6 +26,17 @@ class CreateStationsTable extends Migration
             $table->string('state');
             $table->timestamps();
         });
+
+        Schema::create('contacts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Circuit::class);
+            $table->integer('feeder_id');
+            $table->string('customer_name');
+            $table->string('address');
+            $table->string('primary_phone');
+            $table->string('alt_phone');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -36,5 +47,6 @@ class CreateStationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('stations');
+        Schema::dropIfExists('contacts');
     }
 }

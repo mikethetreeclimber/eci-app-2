@@ -17,6 +17,7 @@ class CreateCircuitsTable extends Migration
         Schema::create('circuits', function (Blueprint $table) {
             $table->id();
             $table->string('circuit_name');
+            $table->string('city');
             $table->foreignIdFor(User::class, 'user_id');
             $table->timestamps();
         });

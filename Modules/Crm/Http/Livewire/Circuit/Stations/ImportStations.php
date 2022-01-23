@@ -7,15 +7,17 @@ use Livewire\WithFileUploads;
 use Modules\Crm\Entities\Station;
 use Maatwebsite\Excel\Facades\Excel;
 use \Illuminate\Support\Facades\Validator;
+use Modules\Crm\Imports\ContactListImport;
 use Modules\Crm\Imports\MailingListImport;
 
 class ImportStations extends Component
 {
     use WithFileUploads;
 
-    public $uniqueStationNumbers;
+    public $uniqueStations;
     public $circuit;
-    public $file;
+    public $mailing;
+    public $contacts;
     public $columns;
 
     public function mount()
@@ -25,40 +27,43 @@ class ImportStations extends Component
 
     public function getStationNumbers()
     {
-        $this->uniqueStationNumbers = collect(
-            Station::select('station_number')
-                ->where('circuit_id', '=', $this->circuit->id)
+        $this->uniqueStations = collect(
+            Station::where('circuit_id', '=', $this->circuit->id)
                 ->get()
-                ->toBase()
-            )->unique()
-                ->sortBy('station_number')
-                ->values()->toBase();
+        )->unique('name')->values()->all();
     }
 
-    public function updatingFile($value)
+    public function updatingMailing($value)
     {
         Validator::make(
-            ['file' => $value],
-            ['file' => 'required|mimes:txt,csv,xls,xlsx'],
+            ['mailing' => $value],
+            ['mailing' => 'required|mimes:xls,xlsx'],
         )->validate();
     }
 
-    public function updatedFile()
+    public function updatedMailing()
     {
-        $this->import();
+        Excel::import(new MailingListImport($this->circuit), $this->mailing->getRealPath());
+        $this->getStationNumbers();
     }
 
-    public function import()
+    public function updatingContacts($value)
     {
-        Excel::import(new MailingListImport($this->circuit), $this->file->getRealPath());
-        $this->getStationNumbers();
+        Validator::make(
+            ['contacts' => $value],
+            ['contacts' => 'required|mimes:xls,xlsx'],
+        )->validate();
+    }
+
+    public function updatedContacts()
+    {
+        Excel::import(new ContactListImport($this->circuit), $this->contacts->getRealPath());
+        $this->dispatchBrowserEvent('notify', 'Contact List Successfully Imported');
         
     }
 
     public function render()
     {
-
-        // dd($this->uniqueStationNumbers);
         return view('crm::livewire.circuit.stations.import-stations');
     }
 }
