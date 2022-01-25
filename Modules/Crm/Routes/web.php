@@ -23,7 +23,7 @@ use Modules\Crm\Http\Controllers\StationsController;
                 Route::prefix('/circuit/{circuit:circuit_name}')->as('circuit.')->group(function () {
                     Route::get('/', [CircuitController::class, 'show'])->name('show');
 
-                    Route::get('/station/{station:station_number}', [StationsController::class, 'show'])
+                    Route::get('/station/{station}', [StationsController::class, 'show'])
                         ->name('station.show');
                 });
     });

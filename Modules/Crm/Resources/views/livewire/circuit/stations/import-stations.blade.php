@@ -6,8 +6,8 @@
                 @forelse ($uniqueStations as $uniqueStation)
 
                     <div class="col-span-1 ">
-                        <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStation->station_number]) }}"
-                            class="w-full h-full btn btn-outline btn-active">{{ $uniqueStation->name }}</a>
+                        <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStation['id']]) }}"
+                            class="w-full h-full btn btn-outline btn-active">{{ $uniqueStation['first_name'] }} {{ $uniqueStation['last_name'] }}</a>
                     </div>
 
                 @empty

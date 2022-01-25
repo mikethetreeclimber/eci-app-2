@@ -1,11 +1,11 @@
 <?php
 
+use Modules\Crm\Entities\Circuit;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Crm\Entities\Circuit;
 
-class CreateStationsTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,16 @@ class CreateStationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stations', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Circuit::class)->onDelete('cascade');;
-            $table->string('station_number');
-            $table->string('unit');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->integer('feeder_id');
+            $table->string('customer_name');
             $table->string('address');
-            $table->string('city');
-            $table->string('state');
+            $table->string('primary_phone');
+            $table->string('alt_phone');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -36,7 +33,6 @@ class CreateStationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stations');
         Schema::dropIfExists('contacts');
     }
 }
