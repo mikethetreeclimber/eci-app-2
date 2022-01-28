@@ -52,12 +52,14 @@ class VerifyContacts extends Component
 
     public function verify(Contacts $contact)
     {
+
+        // dd($contact);
         $stationIds = [];
         foreach ($this->allStationsAssociatedToLastName as $station) {
             array_push($stationIds, $station->id);
         }
 
-        return Permissionings::create([
+        $verifiedContacts = Permissionings::create([
             'circuit_id' => $this->circuit->id,
             'customer_name' => $contact->customer_name,
             'address' => $contact->address,
@@ -66,7 +68,9 @@ class VerifyContacts extends Component
             'station_ids' => implode(',', $stationIds),
         ]);
 
-        dd(Permissionings::where('customer_name', '=', $contact->customer_name)->get());
+        Contacts::find($contact->id)->delete();
+
+        dd($verifiedContacts);
     }
 
     public function render()

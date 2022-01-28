@@ -58,7 +58,7 @@ class ImportStations extends Component
     public function updatedContacts()
     {
         Excel::import(new ContactListImport($this->circuit), $this->contacts->getRealPath());
-        $this->dispatchBrowserEvent('notify', 'Contact List Successfully Imported');
+        // $this->dispatchBrowserEvent('notify', 'Contact List Successfully Imported');
         
     }
 
