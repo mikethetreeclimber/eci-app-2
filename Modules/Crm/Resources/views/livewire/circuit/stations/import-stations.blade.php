@@ -1,5 +1,6 @@
 <div>
-    
+    <div wire:loading="mailing" class="inset-0 w-full h-full bg-black"></div>
+    <div wire:loading="contacts" class="fixed z-50 inset-0 w-full h-full bg-black"></div>
     <div class="card lg:card-side card-bordered">
         <div class="card-body">
             <div class="grid grid-cols-6 gap-4">
@@ -7,7 +8,10 @@
 
                     <div class="col-span-1 ">
                         <a href="{{ route('crm.circuit.station.show', ['circuit' => $circuit->circuit_name, 'station' => $uniqueStation['id']]) }}"
-                            class="w-full h-full btn btn-outline btn-active">{{ $uniqueStation['first_name'] }} {{ $uniqueStation['last_name'] }}</a>
+                            class="w-full h-full btn btn-outline btn-active">
+                            <span>NAME:</span><span> {{ $uniqueStation['first_name'] }} {{ $uniqueStation['last_name'] }}</span>
+                            <span>ADDRESS:</span><span> {{ $uniqueStation['address'] }}</span>
+                        </a>
                     </div>
 
                 @empty

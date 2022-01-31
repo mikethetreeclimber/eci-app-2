@@ -2,10 +2,11 @@
 
 namespace Modules\Crm\Imports;
 
+use Modules\Crm\Entities\Circuit;
 use Modules\Crm\Entities\Station;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Modules\Crm\Entities\Circuit;
+use Modules\Crm\Http\Livewire\Services\AddressSanitizer;
 
 class MailingListImport implements ToModel, WithHeadingRow
 {
@@ -25,7 +26,7 @@ class MailingListImport implements ToModel, WithHeadingRow
                 'unit' => $row['unit'],
                 'first_name' => $row['firstname'],
                 'last_name' => $row['lastname'],
-                'address' => $row['physical_address'],
+                'address' => AddressSanitizer::sanitize($row['physical_address']),
                 'city' => $row['physical_city'],
                 'state' => $row['physical_state']
             ]);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b8ee381ce9d828f4d26ae080f28dfb3",
+    "content-hash": "cb2b1219ecfc56ca373c2a9dbc658b3c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1911,6 +1911,69 @@
                 }
             ],
             "time": "2021-12-10T19:37:40+00:00"
+        },
+        {
+            "name": "loilo/fuse",
+            "version": "6.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/loilo/Fuse.git",
+                "reference": "03d0752ae5717cbd66131656976f9e473d5259c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/loilo/Fuse/zipball/03d0752ae5717cbd66131656976f9e473d5259c0",
+                "reference": "03d0752ae5717cbd66131656976f9e473d5259c0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "^0.3.0",
+                "phpunit/phpunit": "^8.0 || ^9.0",
+                "psalm/plugin-phpunit": "^0.16.1",
+                "squizlabs/php_codesniffer": "^3.6",
+                "vimeo/psalm": "^4.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fuse\\": "src/"
+                },
+                "files": [
+                    "src/Core/computeScore.php",
+                    "src/Core/config.php",
+                    "src/Core/format.php",
+                    "src/Core/parse.php",
+                    "src/Helpers/get.php",
+                    "src/Helpers/sort.php",
+                    "src/Helpers/types.php",
+                    "src/Search/Bitap/computeScore.php",
+                    "src/Search/Bitap/convertMaskToIndices.php",
+                    "src/Search/Bitap/createPatternAlphabet.php",
+                    "src/Search/Bitap/search.php",
+                    "src/Search/Extended/parseQuery.php",
+                    "src/Transform/transformMatches.php",
+                    "src/Transform/transformScore.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Reuschel",
+                    "email": "florian@loilo.de"
+                }
+            ],
+            "description": "Fuzzy search for PHP based on Bitap algorithm",
+            "support": {
+                "issues": "https://github.com/loilo/Fuse/issues",
+                "source": "https://github.com/loilo/Fuse/tree/v6.5.3"
+            },
+            "time": "2021-12-27T11:41:29+00:00"
         },
         {
             "name": "maatwebsite/excel",

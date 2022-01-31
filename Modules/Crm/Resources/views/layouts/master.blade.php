@@ -26,6 +26,17 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+    input[type="range"]::-moz-range-track {
+        padding: 0 10px;
+        background: repeating-linear-gradient(to right, 
+          #ccc, 
+          #ccc 10%, 
+          #000 10%, 
+          #000 11%, 
+          #ccc 11%, 
+          #ccc 20%);
+      }</style>
 </head>
 
 <body> 

@@ -2,52 +2,92 @@
 
 namespace Modules\Crm\Http\Livewire\Circuit\Stations;
 
+use Fuse\Fuse;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Modules\Crm\Entities\Circuit;
 use Modules\Crm\Entities\Station;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Modules\Crm\Entities\Contacts;
+use Illuminate\Database\Query\Builder;
 use Modules\Crm\Entities\Permissionings;
+use Modules\Crm\Http\Livewire\Services\AddressSanitizer;
+use Illuminate\Database\Eloquent\Collection as DBCollection;
 
 class VerifyContacts extends Component
 {
-    public $allStationsAssociatedToLastName;
-    public $station;
-    public $circuit;
-    public $contactFoundWith;
+    public DBCollection $allStationsAssociatedToLastName;
+    public Station $station;
+    public Circuit $circuit;
+    public $threshold = 0.3;
+    public string $contactFoundWith;
+    public string $contactFoundWithAddressAndName;
+    public string $contactFoundWithAddress;
+    public string $contactFoundWithName;
     public $contactInformation;
+    public $contactInformationAddressAndName;
+    public $contactInformationAddress;
+    public $contactInformationName;
 
     public function mount(Circuit $circuit, Station $station)
     {
         $this->station = $station;
         $this->circuit = $circuit;
-        $this->allStationsAssociatedToLastName = Station::where('last_name', '=', $station->last_name)
+        $this->fuzzySearch();
+    }
+
+    public function updatedThreshold($threshold)
+    {
+        $this->threshold = $threshold;
+        $this->fuzzySearch();
+    }
+
+    public function fuzzySearch()
+    {
+        $options = [
+            'ignoreLocation' => true,
+            'threshold' => $this->threshold,
+            'includeScore' => true,
+            'keys' => ['address', 'customer_name'],
+        ];
+        $contacts = collect(Contacts::where('circuit_id', $this->station->circuit_id)->get())->flatten()->toArray();
+        $fuse  = new Fuse($contacts, $options);
+        $fuzzyAddressSearch = $fuse->search(AddressSanitizer::sanitize($this->station->address));
+        $contactByAddress = collect($fuzzyAddressSearch)->pluck('item');
+        $fuzzyNameSearch = $fuse->search($this->station->name);
+        $contactByName = collect($fuzzyNameSearch)->pluck('item');
+        $contactByAddressAndName = [];
+
+        foreach ($contactByAddress as $byAddress) {
+            foreach ($contactByName as $byName) {
+                if($byAddress['address'] === $byName['address']){
+                    $contactByAddressAndName[] = $byName;
+                }
+            }
+        };
+
+
+        $this->allStationsAssociatedToLastName = Station::where('last_name', '=', $this->station->last_name)
             ->orderBy('station_number')
             ->get(['id', 'station_number', 'unit']);
-        $contactByName = DB::table('contacts')
-            ->where('customer_name', 'like', '%' . $station->last_name . '%')
-            ->get();
-        $contactByAddress = DB::table('contacts')
-            ->where('address', 'like', '%' . $station->address . '%')
-            ->get();
 
-        $contactByAddressAndName = DB::table('contacts')
-            ->where('address', 'like', '%' . $station->address . '%')
-            ->where('customer_name', 'like', '%' . $station->last_name . '%')
-            ->get();
-        if ($contactByAddressAndName->isNotEmpty()) {
-            $this->contactFoundWith = 'Address and Last Name';
-            $this->contactInformation = $contactByAddressAndName;
-        } elseif ($contactByAddress->isNotEmpty()) {
-            $this->contactFoundWith = 'Address';
-            $this->contactInformation = $contactByAddress;
-        } elseif ($contactByName->isNotEmpty()) {
-            $this->contactFoundWith = 'Last Name';
-            $this->contactInformation = $contactByName;
+        if (collect($contactByAddressAndName)->isNotEmpty()) {
+            $this->contactFoundWithAddressAndName = 'Address and Name';
+            $this->contactInformationAddressAndName = $contactByAddressAndName;
+        } 
+        if (collect($contactByName)->isNotEmpty()) {
+            $this->contactFoundWithName = 'Name';
+            $this->contactInformationName = $contactByName;
+        } 
+        if (collect($contactByAddress)->isNotEmpty()) {
+            $this->contactFoundWithAddress = 'Address';
+            $this->contactInformationAddress = $contactByAddress;
         } else {
             $this->contactFoundWith = '';
             $this->contactInformation = [];
         }
+
     }
 
     public function verify(Contacts $contact)

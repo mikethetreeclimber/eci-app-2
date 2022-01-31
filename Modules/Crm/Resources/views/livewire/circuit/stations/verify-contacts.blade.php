@@ -1,5 +1,8 @@
 <div class="flex flex-col w-full">
     <div class="divider"></div>
+    <label for="threshold">Adjust the Threshold for the Search</label>
+    <input id="threshold" class="z-50" type="range" wire:model="threshold" min="0"
+            max="1" step=".1">
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
             <div class="p-3 space-y-4 grid h-auto card bg-base-300 rounded-box place-items-center">
@@ -35,18 +38,22 @@
                         @foreach ($contactInformation as $contact)
                             <li class="py-4 flex">
                                 <div class="ml-3">
-                                    @if(!is_array($contact))
-                                    <p class="text-xl font-medium text-secondary">{{ $contact->customer_name }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact->address }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact->primary_phone }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact->alt_phone }}</p>
-                                    <button wire:click="verify({{ $contact->id }})" type="button" class="btn btn-primary">Verify</button>
+                                    @if (!is_array($contact))
+                                        <p class="text-xl font-medium text-secondary">{{ $contact->customer_name }}
+                                        </p>
+                                        <p class=" text-lg text-accent">{{ $contact->address }}</p>
+                                        <p class=" text-lg text-accent">{{ $contact->primary_phone }}</p>
+                                        <p class=" text-lg text-accent">{{ $contact->alt_phone }}</p>
+                                        <button wire:click="verify({{ $contact->id }})" type="button"
+                                            class="btn btn-primary">Verify</button>
                                     @else
-                                    <p class="text-xl font-medium text-secondary">{{ $contact['customer_name'] }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact['address'] }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact['primary_phone'] }}</p>
-                                    <p class=" text-lg text-accent">{{ $contact['alt_phone'] }}</p>
-                                    <button wire:click="verify({{ $contact['id'] }})" type="button" class="btn btn-primary">Verify</button>
+                                        <p class="text-xl font-medium text-secondary">{{ $contact['customer_name'] }}
+                                        </p>
+                                        <p class=" text-lg text-accent">{{ $contact['address'] }}</p>
+                                        <p class=" text-lg text-accent">{{ $contact['primary_phone'] }}</p>
+                                        <p class=" text-lg text-accent">{{ $contact['alt_phone'] }}</p>
+                                        <button wire:click="verify({{ $contact['id'] }})" type="button"
+                                            class="btn btn-primary">Verify</button>
                                     @endif
                                 </div>
                             </li>
