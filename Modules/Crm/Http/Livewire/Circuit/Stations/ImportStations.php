@@ -2,6 +2,7 @@
 
 namespace Modules\Crm\Http\Livewire\Circuit\Stations;
 
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Modules\Crm\Entities\Station;
@@ -9,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use \Illuminate\Support\Facades\Validator;
 use Modules\Crm\Imports\ContactListImport;
 use Modules\Crm\Imports\MailingListImport;
+use Modules\Crm\Jobs\UploadContactListJob;
 
 class ImportStations extends Component
 {
@@ -57,7 +59,10 @@ class ImportStations extends Component
 
     public function updatedContacts()
     {
-        Excel::import(new ContactListImport($this->circuit), $this->contacts->getRealPath());
+        $file = Storage::put('/public', $this->contacts);
+        // $uploadContactsJob = new UploadContactListJob($file, $this->circuit);
+        UploadContactListJob::dispatch($file, $this->circuit);
+        // Excel::import(new ContactListImport($this->circuit), $this->contacts->getRealPath());
         // $this->dispatchBrowserEvent('notify', 'Contact List Successfully Imported');
         
     }

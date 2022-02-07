@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Modules\Crm\Http\Controllers\CircuitController;
 use Modules\Crm\Http\Controllers\CrmController;
+use Modules\Crm\Http\Controllers\CircuitController;
 use Modules\Crm\Http\Controllers\StationsController;
+use Modules\Crm\Http\Controllers\PermissioningsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,9 @@ use Modules\Crm\Http\Controllers\StationsController;
 
                     Route::get('/station/{station}', [StationsController::class, 'show'])
                         ->name('station.show');
+                    });
+                Route::prefix('/permissionings')->as('permissionings.')->group(function () {
+                    Route::get('/', [PermissioningsController::class, 'index'])->name('index');
+                    Route::get('/{permissionings}', [PermissioningsController::class, 'show'])->name('show');
                 });
     });

@@ -44,7 +44,7 @@
 
         </div>
 
-        <div class=" ml-10 text-lg breadcrumbs">
+        {{-- <div class=" ml-10 text-lg breadcrumbs">
             <ul>
                 <li>
                     <a>Home</a>
@@ -53,7 +53,7 @@
                     <li><a href="{{ route('crm.circuit.show', ['circuit' => $breadcrumb]) }}">{{ $breadcrumb }}</a></li>
                 @endforeach
             </ul>
-        </div>
+        </div> --}}
 
         <main>
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">

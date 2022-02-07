@@ -20,7 +20,7 @@ class VerifyContacts extends Component
     public DBCollection $allStationsAssociatedToLastName;
     public Station $station;
     public Circuit $circuit;
-    public $threshold = 0.3;
+    public $threshold = 0.4;
     public string $contactFoundWith;
     public string $contactFoundWithAddressAndName;
     public string $contactFoundWithAddress;
@@ -29,6 +29,10 @@ class VerifyContacts extends Component
     public $contactInformationAddressAndName;
     public $contactInformationAddress;
     public $contactInformationName;
+    public $contact = [
+        'primary_phone' => 0,
+        'alt_phone' => 0,
+    ];
 
     public function mount(Circuit $circuit, Station $station)
     {
@@ -41,6 +45,24 @@ class VerifyContacts extends Component
     {
         $this->threshold = $threshold;
         $this->fuzzySearch();
+    }
+
+    public function dec()
+    {
+        if ($this->threshold !== 0){
+            $this->threshold = round($this->threshold - 0.1, 1);
+        }else{
+            $this->threshold = $this->threshold;
+        } 
+    }
+
+    public function inc()
+    {
+        if ($this->threshold !== 0.8){
+            $this->threshold = round($this->threshold + 0.1, 1);
+        }else{
+            $this->threshold = $this->threshold;
+        }
     }
 
     public function fuzzySearch()
@@ -99,7 +121,7 @@ class VerifyContacts extends Component
             array_push($stationIds, $station->id);
         }
 
-        $verifiedContacts = Permissionings::create([
+        $permissionings = Permissionings::create([
             'circuit_id' => $this->circuit->id,
             'customer_name' => $contact->customer_name,
             'address' => $contact->address,
@@ -110,7 +132,7 @@ class VerifyContacts extends Component
 
         Contacts::find($contact->id)->delete();
 
-        dd($verifiedContacts);
+        $this->redirectRoute('crm.permissionings.show', ['permissionings' => $permissionings]);
     }
 
     public function render()
